@@ -51,7 +51,7 @@ def process_stories(directory, num_sentences=3, limit=10000):
                 all_embeddings = [embedding for chunk in tokenized_chunks
                                   for embedding in be.get_sentence_embeddings(chunk, tokenizer, model, device)]
 
-                 # Check if both sentences and embeddings are empty
+                # Check if both sentences and embeddings are empty
                 if not sentences and not all_embeddings:
                     print(f"No content to summarize for file: {filename}")
                     continue
@@ -62,6 +62,8 @@ def process_stories(directory, num_sentences=3, limit=10000):
 
                 # Save the summary and reference summary with proper labels
                 save_data = {
+                    'story_text': story_text,
+                    'tokenized_sentences': sentences,
                     'generated_summary': summary,
                     'reference_summary': reference_summary
                 }
