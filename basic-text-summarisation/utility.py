@@ -25,3 +25,13 @@ def load_data(filename):
     """
     with open(filename, 'rb') as file:
         return pickle.load(file)
+
+
+def read_pickle_data(filename):
+    data = load_data(filename)
+
+    print("\nGenerated Summary:")
+    print(data['generated_summary'])
+
+    print("\nReference Summary:")
+    print(data['reference_summary'])
