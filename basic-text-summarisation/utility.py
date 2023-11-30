@@ -30,8 +30,19 @@ def load_data(filename):
 def read_pickle_data(filename):
     data = load_data(filename)
 
-    print("\nGenerated Summary:")
-    print(data['generated_summary'])
+    if 'story_text' in data and data['story_text']:
+        print("\nActual Article:")
+        print(data['story_text'])
 
-    print("\nReference Summary:")
-    print(data['reference_summary'])
+    if 'tokenized_sentences' in data and data['tokenized_sentences']:
+        print("\nTokenized sentence:")
+        print(data['tokenized_sentences'])
+
+    if 'generated_summary' in data and data['generated_summary']:
+        print("\nGenerated Summary:")
+        print(data['generated_summary'])
+
+    if 'reference_summary' in data and data['reference_summary']:
+        print("\nReference Summary:")
+        print(data['reference_summary'])
+
