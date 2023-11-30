@@ -29,6 +29,7 @@ def process_stories(directory, num_sentences=3, limit=10000):
 
     for filename in os.listdir(directory):
         start = time.time()
+        print(f"filename : {filename}")
         if filename.endswith('.story') and count < limit:
             processed_data_file = os.path.join(processed_data_dir, f'{filename}_processed.pkl')
 
@@ -43,8 +44,19 @@ def process_stories(directory, num_sentences=3, limit=10000):
                 story_text, reference_summary, tokenizer, model, device = pp.preprocess_story_file(story_path)
                 sentences, tokenized_chunks = pp.preprocess_text(story_text)
 
+                if not story_text.strip():
+                    print(f"Empty story text for file: {filename}")
+                    continue
+
                 all_embeddings = [embedding for chunk in tokenized_chunks
                                   for embedding in be.get_sentence_embeddings(chunk, tokenizer, model, device)]
+
+                 # Check if both sentences and embeddings are empty
+                if not sentences and not all_embeddings:
+                    print(f"No content to summarize for file: {filename}")
+                    continue
+
+                print(f"Number of sentences: {len(sentences)}, Number of embeddings: {len(all_embeddings)}")
 
                 summary = sm.summarize_article(sentences, all_embeddings, num_sentences)
 
